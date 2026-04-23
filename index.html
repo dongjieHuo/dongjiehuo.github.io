@@ -425,9 +425,11 @@
               <tbody>
                 <tr>
                   <td style="padding:16px;width:100%;vertical-align:middle">
-                    <h2>Visitor Map</h2>
-                    <div style="text-align:center;">
-                      <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=VZ0gTZCcXaiktUBLObheJ8uyEPQJKH_Ah0nCL-XdNws&cl=ffffff&w=a"></script>
+                    <div onclick="toggleVisitorMap()" style="display:flex;align-items:center;cursor:pointer;user-select:none;gap:8px;">
+                      <span id="visitor-map-arrow" style="font-size:16px;color:#666;">&#9656;</span>
+                      <h2 style="margin:0;">Visitor Map</h2>
+                    </div>
+                    <div id="visitor-map-container" style="display:none;text-align:center;margin-top:12px;">
                     </div>
                   </td>
                 </tr>
@@ -481,6 +483,29 @@
             alert("Copy failed. Your Email is: " + email);
           }
           document.body.removeChild(textArea);
+        }
+      }
+
+      function toggleVisitorMap() {
+        var container = document.getElementById("visitor-map-container");
+        var arrow = document.getElementById("visitor-map-arrow");
+        if (!container || !arrow) {
+          return;
+        }
+        var isHidden = container.style.display === "none";
+        if (isHidden) {
+          container.style.display = "block";
+          arrow.innerHTML = "&#9662;";
+          if (!document.getElementById("clustrmaps")) {
+            var mapScript = document.createElement("script");
+            mapScript.type = "text/javascript";
+            mapScript.id = "clustrmaps";
+            mapScript.src = "//clustrmaps.com/map_v2.js?d=VZ0gTZCcXaiktUBLObheJ8uyEPQJKH_Ah0nCL-XdNws&cl=ffffff&w=a";
+            container.appendChild(mapScript);
+          }
+        } else {
+          container.style.display = "none";
+          arrow.innerHTML = "&#9656;";
         }
       }
     </script>
